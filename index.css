@@ -16,10 +16,6 @@ body {
     padding-bottom: 40px;
 }
 
-.login-container {
-    display: none;
-}
-
 .header-logo {
     padding: 40px 0 20px;
     text-align: center;
@@ -27,11 +23,12 @@ body {
 
 .header-logo-image {
     width: 80px;
+    margin-bottom: -60px;
 }
 
 .header-theme {
     width: 250px;
-    margin: -60px auto 40px;
+    margin: 0 auto 40px;
     padding: 40px 0 30px;
     color: #555555;
     background-color: #FFE200;
@@ -84,6 +81,11 @@ body {
 }
 
 .gallery-container {
+    width: 612px;
+    margin: auto;
+}
+
+.gallery {
     margin-top: 40px;
     color: #B7B7B7;
     text-align: center;
@@ -99,16 +101,17 @@ body {
 }
 
 .gallery-items {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
     text-align: left;
 }
 
 .gallery-item {
     position: relative;
-    display: inline-block;
     width: 200px;
     height: 200px;
-    margin: 1px;
+    margin: 2px;
     background-color: #777;
     cursor: pointer;
 }
