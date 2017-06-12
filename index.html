@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <title>Creative Ideas</title>
+        <title>Bahaso Sketch</title>
         <link rel="icon" href="logo.png">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,700">
-        <link rel="stylesheet" href="index.1.css">
+        <link rel="stylesheet" href="index.2.css">
     </head>
     <body>
         <div class="container">
             <header>
                 <div class="header-logo">
-                    <img class="header-logo-image" src="logo.png" alt="Creative Ideas">
+                    <img class="header-logo-image" src="logo.png" alt="Bahaso Sketch">
                 </div>
                 <div class="header-theme">
                     <div class="gallery-day">TODAY'S THEME</div>
@@ -29,11 +29,11 @@
                         <input class="form-control" id="login-password" type="password" placeholder="Password">
                     </div>
                     <div class="form-input-container">
-                        <button class="btn btn-login" id="btn-login">LOGIN</button>
+                        <button class="btn btn-block btn-primary" id="btn-primary">LOGIN</button>
                     </div>
                     <div class="form-input-separator">or</div>
                     <div class="form-input-container">
-                        <button class="btn btn-login-google" id="btn-login-google">Google Sign In</button>
+                        <button class="btn btn-block btn-google" id="btn-primary-google">Google Sign In</button>
                     </div>
                 </div>
                 <div class="gallery-container">
@@ -44,22 +44,26 @@
                 </div>
             </div>
             <div class="home-container" id="home-container">
-                <button class="btn btn-login" id="btn-logout" style="display: block; width: 100px; margin: -30px auto 0; background-color: #666; color: #444">LOGOUT</button>
-                <div style="text-align: center; padding-bottom: 10px; margin-top: 40px; background: #666">
-                    <br><input id="upload-file" type="file" accept="image/*" capture style="border: 1px solid black">
-                    <br><button id="upload-button">upload</button>
-                </div>
+                <button class="btn btn-block btn-primary" id="btn-logout" style="width: 250px; margin: -30px auto">LOGOUT</button>
+                <form id="upload-file-form">
+                    <input id="upload-file-input" type="file" accept="image/*" capture style="display: none">
+                </form>
                 <div class="gallery-container">
                     <div class="gallery">
-                        <div class="gallery-items" id="today-gallery"></div>
+                        <div class="gallery-items" id="today-gallery">
+                            <label class="upload-file-button" for="upload-file">
+                                <button id="upload-ok-button" class="btn btn-primary">Upload</button>
+                                <button id="upload-cancel-button" class="btn btn-primary">Cancel</button>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-container" id="home-gallery"></div>
             </div>
-            <footer>creativeideas &copy; 2017</footer>
+            <footer>Bahaso Sketch &copy; 2017</footer>
         </div>
         <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="index.1.js"></script>
+        <script src="index.2.js"></script>
     </body>
 </html>
