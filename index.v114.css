@@ -30,8 +30,8 @@ body {
     width: 250px;
     margin: 0 auto 40px;
     padding: 35px 0 15px;
-    color: #555555;
-    background-color: #FFE200;
+    color: #FFFFFF;
+    background-color: #42ABE0;
     font-weight: 400;
     text-align: center;
 }
@@ -55,7 +55,7 @@ body {
 
 .form-input-separator {
     padding: 5px 0;
-    color: #fff;
+    color: #FFFFFF;
     font-size: 14px;
     text-align: center;
 }
@@ -81,13 +81,14 @@ body {
 }
 
 .btn-primary {
-    background-color: #FFE200;
+    color: #FFFFFF;
+    background-color: #42ABE0;
     font-weight: 100;
     letter-spacing: 1px;
 }
 
 .btn-google {
-    color: #fff;
+    color: #FFFFFF;
     background-color: #367CFF;
     font-weight: 700;
 }
@@ -174,6 +175,7 @@ body {
     text-align: center;
     background-image: url('upload.png');
     background-size: cover;
+    background-position: center;
     cursor: pointer;
 }
 
