@@ -15,7 +15,7 @@ $(function () {
     var storage = firebase.storage();
 
     var DEFAULT_THEME = 'RANDOM';
-    var DEFAULT_THEME_ID = '20170612';
+    var DEFAULT_THEME_ID = '20170000';
     var TODAY_THEME_ID = getThemeID();
 
     var galleryLogin = $('#login-gallery');
@@ -59,14 +59,14 @@ $(function () {
             auth.signInWithEmailAndPassword(user, pass).catch(function (error) {
                 if(error.code === 'auth/user-not-found') {
                     auth.createUserWithEmailAndPassword(user, pass).catch(function (error) {
-                        console.log(error);
+                        alert('Connection error!');
                     });
                 } else {
-                    console.log(error);
+                    alert('Connection error!');
                 }
             });
         } else {
-            console.log('data tidak lengkap');
+            alert('Wrong data!');
         }
     });
 
@@ -74,7 +74,7 @@ $(function () {
         var provider = new firebase.auth.GoogleAuthProvider();
 
         auth.signInWithPopup(provider).catch(function (error) {
-            console.log(error);
+            alert('Connection error!');
         });
     });
     
@@ -87,6 +87,9 @@ $(function () {
         if(!imageEl.files[0]) {
             return true;
         }
+
+        $('#upload-ok-button').prop('disabled', true);
+        $('#upload-cancel-button').prop('disabled', true);
 
         var image = imageEl.files[0];
         var fileRef = storage.ref('images/' + getDate() + getTime() + image.name);
@@ -103,9 +106,13 @@ $(function () {
             return database.ref().update(updates);
         }).then(function () {
             $('#upload-file-input').val('').trigger('change');
-            console.log('sukses');
+            $('#upload-ok-button').prop('disabled', false);
+            $('#upload-cancel-button').prop('disabled', false);
         }).catch(function (error) {
-            console.log(error);
+            alert('Connection error!');
+            $('#upload-file-input').val('').trigger('change');
+            $('#upload-ok-button').prop('disabled', false);
+            $('#upload-cancel-button').prop('disabled', false);
         });
     });
 
@@ -117,12 +124,12 @@ $(function () {
         var imageEl = document.getElementById('upload-file-input');
         if(imageEl.files[0]) {
             objectURLHandler = URL.createObjectURL(imageEl.files[0]);
-            $('.upload-file-button').addClass('selected');
             $('.upload-file-button').css('background-image', 'url(' + objectURLHandler + ')');
+            $('.upload-button-container').addClass('active');
         } else {
             URL.revokeObjectURL(objectURLHandler);
-            $('.upload-file-button').removeClass('selected');
             $('.upload-file-button').css('background-image', '');
+            $('.upload-button-container').removeClass('active');
         }
     });
 
@@ -175,16 +182,16 @@ $(function () {
     }
 
     function loadTodayGallery() {
-        var upload = '<label class="upload-file-button" for="upload-file-input"><button id="upload-ok-button" class="btn btn-primary">Upload</button><button id="upload-cancel-button" class="btn btn-primary">Cancel</button></label>';
-        galleryToday.append(upload);
+        var upload = $('#upload-button-template').text();
+        galleryToday.html(upload);
 
         var dbRef = database.ref('/themes_photos/' + TODAY_THEME_ID);
         dbRef.off();
         dbRef.on('child_added', function (data) {
             var photo = data.val();
-            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + photo.name + '</div></div></div>';
+            var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></a>';
             
-            galleryToday.append(item);
+            galleryToday.prepend(item);
         });
     }
 
@@ -205,7 +212,7 @@ $(function () {
                     $.each(photos, function (key, photo) {
                         var imageUrl = photo.url;
                         var user = photo.name;
-                        var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + user + '</div></div></div>';
+                        var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div></a>';
                         items = item + items;
                     });
 

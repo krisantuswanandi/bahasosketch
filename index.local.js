@@ -54,12 +54,12 @@ $(function () {
         var imageEl = document.getElementById('upload-file-input');
         if(imageEl.files[0]) {
             objectURLHandler = URL.createObjectURL(imageEl.files[0]);
-            $('.upload-file-button').addClass('selected');
             $('.upload-file-button').css('background-image', 'url(' + objectURLHandler + ')');
+            $('.upload-button-container').addClass('active');
         } else {
             URL.revokeObjectURL(objectURLHandler);
-            $('.upload-file-button').removeClass('selected');
             $('.upload-file-button').css('background-image', '');
+            $('.upload-button-container').removeClass('active');
         }
     });
 
@@ -116,26 +116,26 @@ $(function () {
     }
 
     function loadTodayGallery() {
-        var upload = '<label class="upload-file-button" for="upload-file-input"><button id="upload-ok-button" class="btn btn-primary">Upload</button><button id="upload-cancel-button" class="btn btn-primary">Cancel</button></label>';
-        galleryToday.append(upload);
+        var upload = $('#upload-button-template').text();
+        galleryToday.html(upload);
 
-        for(i = 0; i < 10; i++) {
+        for(i = 0; i < 8; i++) {
             var photo = newPost;
-            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + photo.name + '</div></div></div>';
+            var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
             
-            galleryToday.append(item);
+            galleryToday.prepend(item);
         }
     }
 
     function loadHomeGallery() {
-        for(i = 1; i < 10; i++) {
-            var items_start = '<div class="gallery"><div class="gallery-day">DAY' + i + '</div><div class="gallery-theme">#' + DEFAULT_THEME + '</div><div class="gallery-items">';
+        for(i = 1; i < 4; i++) {
+            var items_start = '<div class="gallery"><div class="gallery-day">DAY ' + i + '</div><div class="gallery-theme">#' + DEFAULT_THEME + '</div><div class="gallery-items">';
             var items_end = '</div></div>';
             var items = '';
 
-            for(j = 0; j < 10; j++) {
+            for(j = 0; j < 9; j++) {
                 var photo = newPost;
-                var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + photo.name + '</div></div></div>';
+                var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></a>';
                 items = item + items;
             }
 

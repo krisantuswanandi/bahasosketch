@@ -7,7 +7,7 @@
         <title>Bahaso Sketch</title>
         <link rel="icon" href="logo.png">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,700">
-        <link rel="stylesheet" href="index.v114.css">
+        <link rel="stylesheet" href="index.v115.css">
     </head>
     <body>
         <div class="container">
@@ -26,10 +26,10 @@
                         <input class="form-control" id="login-email" type="text" placeholder="Email">
                     </div>
                     <div class="form-input-container">
-                        <input class="form-control" id="login-password" type="password" placeholder="Password">
+                        <input class="form-control" id="login-password" type="password" placeholder="Password (more than 6 characters)">
                     </div>
                     <div class="form-input-container">
-                        <button class="btn btn-block btn-primary" id="btn-login">LOGIN</button>
+                        <button class="btn btn-block btn-primary" id="btn-login">LOGIN / REGISTER</button>
                     </div>
                     <div class="form-input-separator">or</div>
                     <div class="form-input-container">
@@ -45,25 +45,29 @@
             </div>
             <div class="home-container" id="home-container">
                 <button class="btn btn-block btn-primary" id="btn-logout" style="width: 250px; margin: -30px auto">LOGOUT</button>
-                <form id="upload-file-form">
-                    <input id="upload-file-input" type="file" accept="image/*" capture style="display: none">
-                </form>
+                <input id="upload-file-input" type="file" accept="image/*" style="display: none">
                 <div class="gallery-container">
                     <div class="gallery">
-                        <div class="gallery-items" id="today-gallery">
-                            <label class="upload-file-button" for="upload-file">
-                                <button id="upload-ok-button" class="btn btn-primary">Upload</button>
-                                <button id="upload-cancel-button" class="btn btn-primary">Cancel</button>
-                            </label>
-                        </div>
+                        <div class="gallery-items" id="today-gallery"></div>
                     </div>
                 </div>
                 <div class="gallery-container" id="home-gallery"></div>
             </div>
-            <footer>Bahaso Sketch &copy; 2017</footer>
+            <footer>
+                Bahaso Sketch &copy; 2017
+            </footer>
         </div>
+        <script type="text/html" id="upload-button-template">
+            <div class="gallery-item" style="order: 0">
+                <label class="upload-file-button" for="upload-file-input"></label>
+                <div class="upload-button-container">
+                    <button id="upload-ok-button" class="btn btn-primary">Upload</button>
+                    <button id="upload-cancel-button" class="btn btn-primary">Cancel</button>
+                </div>
+            </div>
+        </script>
         <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="index.v114.js"></script>
+        <script src="index.v115.js"></script>
     </body>
 </html>

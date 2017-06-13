@@ -13,7 +13,7 @@ body {
 .container {
     position: relative;
     min-height: 100vh;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
 .header-logo {
@@ -87,6 +87,13 @@ body {
     letter-spacing: 1px;
 }
 
+.btn-primary[disabled],
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: #bcd9e8;
+    pointer-events: none;
+}
+
 .btn-google {
     color: #FFFFFF;
     background-color: #367CFF;
@@ -94,7 +101,7 @@ body {
 }
 
 .gallery-container {
-    width: 612px;
+    max-width: 612px;
     margin: auto;
 }
 
@@ -122,10 +129,10 @@ body {
 
 .gallery-item {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 2px;
-    background-color: #777;
+    display: block;
+    width: 33.3333%;
+    padding: 2px;
+    order: 1;
 }
 
 .gallery-item:hover > .gallery-detail {
@@ -134,8 +141,10 @@ body {
 
 .gallery-image {
     width: 100%;
-    height: 100%;
+    padding-top: 100%;
+    background-color: #777;
     background-size: cover;
+    background-position: center;
 }
 
 .gallery-detail {
@@ -143,9 +152,10 @@ body {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
     padding: 10px;
     background-color: rgba(0, 0, 0, .5);
 }
@@ -164,15 +174,9 @@ body {
 }
 
 .upload-file-button {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 2px;
-    background-color: #777;
-    text-align: center;
+    display: block;
+    width: 100%;
+    padding-top: 100%;
     background-image: url('upload.png');
     background-size: cover;
     background-position: center;
@@ -180,15 +184,28 @@ body {
 }
 
 .upload-file-button button {
+    margin-top: 5px;
+}
+
+.upload-button-container {
     display: none;
+    justify-content: center;
+    align-content: flex-end;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
 }
 
-.upload-file-button.selected button {
-    display: inline-block;
+.upload-button-container button {
+    margin: 3px;
 }
 
-.upload-file-button #upload-ok-button {
-    margin-right: 5px;
+.upload-button-container.active {
+    display: flex;
 }
 
 footer {
