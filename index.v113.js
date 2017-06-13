@@ -22,6 +22,8 @@ $(function () {
     var galleryToday = $('#today-gallery');
     var galleryHome = $('#home-gallery');
 
+    var objectURLHandler = '';
+
     auth.onAuthStateChanged(function (user) {
         galleryLogin.html('');
         galleryToday.html('');
@@ -49,7 +51,7 @@ $(function () {
         el.text('#' + theme);
     });
 
-    $('#btn-login').click(function () {
+    $('.container').on('click', '#btn-login', function () {
         var user = $('#login-email').val();
         var pass = $('#login-password').val();
 
@@ -68,7 +70,7 @@ $(function () {
         }
     });
 
-    $('#btn-login-google').click(function () {
+    $('.container').on('click', '#btn-login-google', function () {
         var provider = new firebase.auth.GoogleAuthProvider();
 
         auth.signInWithPopup(provider).catch(function (error) {
@@ -76,12 +78,12 @@ $(function () {
         });
     });
     
-    $('#btn-logout').click(function () {
+    $('.container').on('click', '#btn-logout', function () {
         auth.signOut();
     });
 
-    $('#upload-button').click(function () {
-        var imageEl = document.getElementById('upload-file');
+    $('.container').on('click', '#upload-ok-button', function () {
+        var imageEl = document.getElementById('upload-file-input');
         if(!imageEl.files[0]) {
             return true;
         }
@@ -100,10 +102,28 @@ $(function () {
             updates['/themes_photos/' + TODAY_THEME_ID + '/' + newPostKey] = newPost;
             return database.ref().update(updates);
         }).then(function () {
+            $('#upload-file-input').val('').trigger('change');
             console.log('sukses');
         }).catch(function (error) {
             console.log(error);
         });
+    });
+
+    $('.container').on('click', '#upload-cancel-button', function () {
+        $('#upload-file-input').val('').trigger('change');
+    });
+
+    $('.container').on('change', '#upload-file-input', function () {
+        var imageEl = document.getElementById('upload-file-input');
+        if(imageEl.files[0]) {
+            objectURLHandler = URL.createObjectURL(imageEl.files[0]);
+            $('.upload-file-button').addClass('selected');
+            $('.upload-file-button').css('background-image', 'url(' + objectURLHandler + ')');
+        } else {
+            URL.revokeObjectURL(objectURLHandler);
+            $('.upload-file-button').removeClass('selected');
+            $('.upload-file-button').css('background-image', '');
+        }
     });
 
     function getDate(date) {
@@ -148,23 +168,23 @@ $(function () {
         dbRef.off();
         dbRef.on('child_added', function (data) {
             var photo = data.val();
-            var imageUrl = photo.url;
-            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div></div>';
+            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
             
             galleryLogin.prepend(item);
         });
     }
 
     function loadTodayGallery() {
+        var upload = '<label class="upload-file-button" for="upload-file-input"><button id="upload-ok-button" class="btn btn-primary">Upload</button><button id="upload-cancel-button" class="btn btn-primary">Cancel</button></label>';
+        galleryToday.append(upload);
+
         var dbRef = database.ref('/themes_photos/' + TODAY_THEME_ID);
         dbRef.off();
         dbRef.on('child_added', function (data) {
             var photo = data.val();
-            var imageUrl = photo.url;
-            var user = photo.name;
-            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + user + '</div></div></div>';
+            var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div><div class="gallery-detail"><div class="gallery-user">' + photo.name + '</div></div></div>';
             
-            galleryToday.prepend(item);
+            galleryToday.append(item);
         });
     }
 
@@ -178,7 +198,7 @@ $(function () {
                 var themeRef = database.ref('/themes/' + data.key);
                 themeRef.once('value').then(function (data) {
                     var theme = data.val();
-                    var items_start = '<div class="gallery"><div class="gallery-day">' + ((theme === 'RANDOM') ? '' : ('DAY ' + day++)) + '</div><div class="gallery-theme">#' + theme + '</div><div class="gallery-items">';
+                    var items_start = '<div class="gallery"><div class="gallery-day">' + ((theme === DEFAULT_THEME) ? 'DAY 0' : ('DAY ' + day++)) + '</div><div class="gallery-theme">#' + theme + '</div><div class="gallery-items">';
                     var items_end = '</div></div>';
                     var items = '';
 
