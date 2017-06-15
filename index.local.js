@@ -63,6 +63,21 @@ $(function () {
         }
     });
 
+    $('.container').on('click', '#btn-close-popup', function () {
+        $('#popup').removeClass('active');
+        $('body').removeClass('popup-open');
+    });
+
+    $('.container').on('click', '.gallery-item.clickable', function () {
+        var user = $(this).data('user');
+        var src = $(this).data('src');
+
+        $('#popup-title').text('by ' + user);
+        $('#popup-image').attr('src', src);
+        $('#popup').addClass('active');
+        $('body').addClass('popup-open');
+    });
+
     function getDate(date) {
         var date = date || new Date();
         var year = date.getFullYear();
@@ -121,7 +136,7 @@ $(function () {
 
         for(i = 0; i < 8; i++) {
             var photo = newPost;
-            var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
+            var item = '<div data-user="' + photo.name + '" data-src="' + photo.url + '" class="gallery-item clickable"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
             
             galleryToday.prepend(item);
         }
@@ -135,7 +150,7 @@ $(function () {
 
             for(j = 0; j < 9; j++) {
                 var photo = newPost;
-                var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></a>';
+                var item = '<div data-user="' + photo.name + '" data-src="' + photo.url + '" class="gallery-item clickable"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
                 items = item + items;
             }
 

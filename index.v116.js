@@ -93,7 +93,7 @@ $(function () {
 
         var image = imageEl.files[0];
         var fileRef = storage.ref('images/' + getDate() + getTime() + image.name);
-        fileRef.put(image).then(function (data) {
+        fileRef.put(image, {cacheControl: 'public,max-age=31536000'}).then(function (data) {
             var newPostKey = database.ref('/photos').push().key;
             var newPost = {
                 name: auth.currentUser.email,
@@ -131,6 +131,21 @@ $(function () {
             $('.upload-file-button').css('background-image', '');
             $('.upload-button-container').removeClass('active');
         }
+    });
+
+    $('.container').on('click', '#btn-close-popup', function () {
+        $('#popup').removeClass('active');
+        $('body').removeClass('popup-open');
+    });
+
+    $('.container').on('click', '.gallery-item.clickable', function () {
+        var user = $(this).data('user');
+        var src = $(this).data('src');
+
+        $('#popup-title').text('by ' + user);
+        $('#popup-image').attr('src', src);
+        $('#popup').addClass('active');
+        $('body').addClass('popup-open');
     });
 
     function getDate(date) {
@@ -176,7 +191,7 @@ $(function () {
         dbRef.on('child_added', function (data) {
             var photo = data.val();
             var item = '<div class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
-            
+
             galleryLogin.prepend(item);
         });
     }
@@ -189,7 +204,7 @@ $(function () {
         dbRef.off();
         dbRef.on('child_added', function (data) {
             var photo = data.val();
-            var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></a>';
+            var item = '<div data-user="' + photo.name + '" data-src="' + photo.url + '" class="gallery-item clickable"><div class="gallery-image" style="background-image: url(\'' + photo.url + '\')"></div></div>';
             
             galleryToday.prepend(item);
         });
@@ -212,7 +227,7 @@ $(function () {
                     $.each(photos, function (key, photo) {
                         var imageUrl = photo.url;
                         var user = photo.name;
-                        var item = '<a target="_blank" href="' + photo.url + '" class="gallery-item"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div></a>';
+                        var item = '<div data-user="' + photo.name + '" data-src="' + photo.url + '" class="gallery-item clickable"><div class="gallery-image" style="background-image: url(\'' + imageUrl + '\')"></div></div>';
                         items = item + items;
                     });
 
