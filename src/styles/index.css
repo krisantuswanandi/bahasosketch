@@ -1,0 +1,88 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFA;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 1px;
+    padding: 15px 0;
+}
+
+/*POPUP*/
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    margin: auto;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, .5)
+}
+
+.popup-open .popup {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+body.popup-open {
+    overflow: hidden;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup-dialog {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.popup-header {
+    background: white;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.popup-header > .title {
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10px;
+    width: 85%;
+}
+
+.popup-header > .close {
+    padding: 10px 15px;
+    float: right;
+    cursor: pointer;
+}
+
+.popup-image {
+    display: block;
+    width: 100%;
+    background: black;
+}
