@@ -18,12 +18,14 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
+                exclude: /node_modules/,
                 options: {
-                    presets: ['react']
+                    presets: ['react', 'env']
                 }
             },
             {
                 test: /\.css$/,
+                exclude: /node_modules/,
                 use: ExtractText.extract({
                     fallback: 'style-loader',
                     use: {
@@ -38,6 +40,7 @@ module.exports = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/,
+                exclude: /node_modules/,
                 use: [
                     {
                         loader: 'url-loader',
