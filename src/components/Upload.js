@@ -1,5 +1,7 @@
 import React from 'react'
+import * as firebase from 'firebase'
 
+import {getStringDate, getStringTime, getThemeID} from '../utils/functions'
 import style from '../styles/upload.css'
 
 export default class Upload extends React.Component {
@@ -7,26 +9,62 @@ export default class Upload extends React.Component {
         super()
 
         this.state = {
-            file: ''
+            file: null,
+            imgPreview: '',
+            uploading: false
         }
     }
 
     confirmUpload() {
-        alert('berhasil')
+        if(this.state.file) {
+            const file = this.state.file
+            const fileExt = file.name.slice((file.name.lastIndexOf(".") - 1 >>> 0) + 1)
+            const fileName = 'images/' + getStringDate() + getStringTime() + fileExt
+
+            this.setState({uploading: true})
+            const fileRef = firebase.storage().ref(fileName)
+            fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
+                const newPostKey = firebase.database().ref('/photos').push().key
+                const newPost = {
+                    name: firebase.auth().currentUser.email,
+                    url: data.metadata.downloadURLs[0],
+                    path: data.metadata.fullPath
+                }
+
+                let updates = {}
+                updates['/photos/' + newPostKey] = newPost
+                updates['/themes_photos/' + getThemeID() + '/' + newPostKey] = newPost
+
+                return firebase.database().ref().update(updates)
+            }).then(() => {
+                this.clearUpload()
+            }).catch((error) => {
+                console.log(error)
+                alert('Connection error!')
+                this.clearUpload()
+            })
+        }
     }
 
-    cancelUpload() {
-        const file = this.state.file
-        URL.revokeObjectURL(file)
-        this.setState({file: ''})
+    clearUpload() {
+        const imgPreview = this.state.imgPreview
+        URL.revokeObjectURL(imgPreview)
+        
+        this.refs.file.value = ''
+        this.setState({
+            imgPreview: '',
+            file: null,
+            uploading: false
+        })
     }
 
     handleFiles(event) {
         if(event.target.files[0]) {
-            const file = URL.createObjectURL(event.target.files[0])
-            this.setState({file})
-        } else {
-            this.cancelUpload()
+            const imgPreview = URL.createObjectURL(event.target.files[0])
+            this.setState({
+                imgPreview,
+                file: event.target.files[0]
+            })
         }
     }
 
@@ -34,19 +72,19 @@ export default class Upload extends React.Component {
         let bgImg = ''
         let containerState = style.uploadButtonContainer
 
-        if(this.state.file !== '') {
-            bgImg = `url(${this.state.file})`
+        if(this.state.imgPreview !== '') {
+            bgImg = `url(${this.state.imgPreview})`
             containerState = `${style.uploadButtonContainer} ${style.active}`
         }
 
         return (
             <div className={style.uploadItem}>
                 <label className={style.uploadFileButton} style={{backgroundImage: bgImg}}>
-                    <input type="file" className={style.uploadFileInput} onChange={this.handleFiles.bind(this)}/>
+                    <input ref="file" type="file" className={style.uploadFileInput} onChange={this.handleFiles.bind(this)}/>
                 </label>
                 <div className={containerState}>
-                    <button className={style.btn} onClick={this.confirmUpload.bind(this)}>&#x2713;</button>
-                    <button className={style.btn} onClick={this.cancelUpload.bind(this)}>&#x2717;</button>
+                    <button className={style.btn} disabled={this.state.uploading} onClick={this.confirmUpload.bind(this)}>&#x2713;</button>
+                    <button className={style.btn} disabled={this.state.uploading} onClick={this.clearUpload.bind(this)}>&#x2717;</button>
                 </div>
             </div>
         )
