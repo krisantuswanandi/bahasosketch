@@ -56,7 +56,8 @@ module.exports = {
     plugins: [
         new ExtractText('[contenthash:10].css'),
         new HTMLTemplate({
-            template: 'src/index.html'
+            template: 'src/index.html',
+            favicon: 'src/images/logo.png'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['vendor', 'manifest']
