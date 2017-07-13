@@ -38,3 +38,7 @@
 .upload-button-container.active {
     display: flex;
 }
+
+.upload-button-container button {
+    margin: 2px;
+}
