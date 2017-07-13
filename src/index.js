@@ -22,6 +22,6 @@ const prodConfig = {
     messagingSenderId: '267090960672'
 }
 
-firebase.initializeApp(devConfig)
+firebase.initializeApp(prodConfig)
 
 ReactDOM.render(<App/>, document.getElementById('container'))
