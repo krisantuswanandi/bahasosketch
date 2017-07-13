@@ -9,12 +9,12 @@
     z-index: 9999;
     background-color: rgba(0, 0, 0, .5);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .popup-dialog {
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
     margin: auto;
     border-radius: 3px;
     overflow: hidden;
@@ -23,6 +23,7 @@
 .popup-header {
     background: white;
     border-bottom: 1px solid #CCCCCC;
+    text-align: left;
 }
 
 .popup-title {

@@ -16,19 +16,12 @@ export default class Login extends React.Component {
 
     componentWillMount() {
         this.dbRef.on('child_added', data => {
-            const {url} = data.val()
+            const {name, path, url} = data.val()
 
             this.setState({
-                photos: [{url}, ...this.state.photos]
+                photos: [{name, path, url}, ...this.state.photos]
             })
         })
-
-        /*TODO: sample JSON*/
-        /*for(let i = 0; i < 9; i++) {
-            this.setState({
-                photos: [{url: 'https://lorempixel/200/200'}, ...this.state.photos]
-            })
-        }*/
     }
 
     componentWillUnmount() {

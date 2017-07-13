@@ -3,6 +3,7 @@ import * as firebase from 'firebase'
 
 import {getStringDate, getStringTime, getThemeID} from '../utils/functions'
 import style from '../styles/upload.css'
+import styleBtn from '../styles/form.css'
 
 export default class Upload extends React.Component {
     constructor() {
@@ -83,8 +84,8 @@ export default class Upload extends React.Component {
                     <input ref="file" type="file" className={style.uploadFileInput} onChange={this.handleFiles.bind(this)}/>
                 </label>
                 <div className={containerState}>
-                    <button className={style.btn} disabled={this.state.uploading} onClick={this.confirmUpload.bind(this)}>&#x2713;</button>
-                    <button className={style.btn} disabled={this.state.uploading} onClick={this.clearUpload.bind(this)}>&#x2717;</button>
+                    <button className={`${styleBtn.btn} ${styleBtn.btnPrimary}`} disabled={this.state.uploading} onClick={this.confirmUpload.bind(this)}>Upload</button>
+                    <button className={`${styleBtn.btn} ${styleBtn.btnPrimary}`} disabled={this.state.uploading} onClick={this.clearUpload.bind(this)}>Cancel</button>
                 </div>
             </div>
         )
