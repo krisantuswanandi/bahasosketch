@@ -1,0 +1,61 @@
+.form-container {
+    max-width: 250px;
+    margin: auto;
+}
+
+.form-input-container {
+    margin-top: 5px;
+}
+
+.form-input-error {
+    padding-top: 2px;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-input-separator {
+    padding: 2px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #42ABE0;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.btn-primary[disabled],
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: #bcd9e8;
+    pointer-events: none;
+}
+
+.btn-google {
+    color: white;
+    background-color: #367CFF;
+    font-weight: 700;
+}
