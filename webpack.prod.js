@@ -4,14 +4,13 @@ const ExtractText = require('extract-text-webpack-plugin')
 const HTMLTemplate = require('html-webpack-plugin')
 
 module.exports = {
-    devtool: 'source-map',
     entry: {
         bundle: './src/index',
         vendor: ['react', 'react-dom', 'firebase']
     },
     output: {
         path: path.resolve(__dirname, 'docs'),
-        filename: '[name][chunkhash:10].js'
+        filename: '[chunkhash:10].js'
     },
     module: {
         rules: [
@@ -33,7 +32,7 @@ module.exports = {
                         options: {
                             modules: true,
                             camelCase: true,
-                            localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                            localIdentName: '[hash:base64:5]'
                         }
                     }
                 })
@@ -54,13 +53,19 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractText('style.css'),
+        new ExtractText('[contenthash:10].css'),
         new HTMLTemplate({
             template: 'src/index.html',
             favicon: 'src/images/logo.png'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['vendor', 'manifest']
-        })
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ]
 }
