@@ -34,7 +34,7 @@ export default class LoginForm extends React.Component {
         } else {
             firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {
                 if(error.code === 'auth/user-not-found') {
-                    auth.createUserWithEmailAndPassword(email, password).catch(error => {
+                    firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
                         this.setState({error: error.message})
                     });
                 } else {
