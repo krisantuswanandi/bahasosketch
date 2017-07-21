@@ -20,16 +20,16 @@ export default class Upload extends React.Component {
         if(this.state.file) {
             const file = this.state.file
             const fileExt = file.name.slice((file.name.lastIndexOf(".") - 1 >>> 0) + 1)
-            const fileName = 'images/' + getStringDate() + getStringTime() + fileExt
+            const fileName = getStringDate() + getStringTime() + fileExt
 
             this.setState({uploading: true})
-            const fileRef = firebase.storage().ref(fileName)
+            const fileRef = firebase.storage().ref(`photo/${fileName}`)
             fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
                 const newPostKey = firebase.database().ref('/photos').push().key
                 const newPost = {
                     name: firebase.auth().currentUser.email,
                     url: data.metadata.downloadURLs[0],
-                    path: data.metadata.fullPath
+                    path: fileName
                 }
 
                 let updates = {}
