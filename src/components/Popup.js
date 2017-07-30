@@ -3,6 +3,14 @@ import React from 'react'
 import style from '../styles/popup.css'
 
 export default class Popup extends React.Component {
+    componentWillMount() {
+        document.body.style.overflow = 'hidden'
+    }
+
+    componentWillUnmount() {
+        document.body.style.overflow = 'auto'
+    }
+
     render() {
         return (
             <div className={`${style.popup}`} onClick={() => {this.props.close()}}>
