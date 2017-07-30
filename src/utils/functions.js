@@ -38,6 +38,13 @@ export function getThemeID() {
     return getStringDate(new Date());
 }
 
+export function getThemeIDFrom(diff) {
+    const now = new Date()
+    now.setDate(now.getDate() - diff)
+
+    return getStringDate(now)
+}
+
 export function getThemeDay(now) {
     return getDateDiffInDay(START_DATE, now)
 }
