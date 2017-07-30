@@ -4,7 +4,7 @@
   "description": "daily drawing challenge",
   "main": "index.js",
   "scripts": {
-    "clear": "rimraf dist",
+    "clear": "rimraf docs",
     "build": "NODE_ENV=production npm run clear && webpack -p",
     "serve": "webpack-dev-server"
   },
