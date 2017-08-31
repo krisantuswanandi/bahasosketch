@@ -3,7 +3,6 @@ import * as firebase from 'firebase'
 
 import GalleryItem from './GalleryItem'
 import Popup from './Popup'
-import Upload from './Upload'
 import style from '../styles/gallery.css'
 
 export default class Gallery extends React.Component {
@@ -45,10 +44,7 @@ export default class Gallery extends React.Component {
 
     render() {
         const {data: {title, theme, photos}} = this.props
-        const upload = this.props.upload || false
-
-        const datas = photos.map((photo, index) => <GalleryItem key={photo.path} photo={photo} click={this.openPopup}/>)
-        const items = upload ? [<Upload key="upload"/>, ...datas] : datas
+        const items = photos.map((photo, index) => <GalleryItem key={photo.path} photo={photo} click={this.openPopup}/>)
 
         return (
             <div className={style.gallery}>

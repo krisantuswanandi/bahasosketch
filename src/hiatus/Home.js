@@ -1,19 +1,16 @@
 import React from 'react'
 import * as firebase from 'firebase'
 
-import Logout from './Logout'
 import GalleryContainer from './GalleryContainer'
-import {getThemeID, getThemeDay, getThemeIDFrom} from '../utils/functions'
+import {getThemeDay, getThemeIDFrom} from '../utils/functions'
 
 import style from '../styles/form.css'
 
 export default class Home extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
-        this.todayRef = firebase.database().ref(`/themes_photos/${getThemeID()}`)
         this.state = {
-            todays: [],
             items: [],
             lastItem: 1,
             isLoading: false
@@ -24,19 +21,6 @@ export default class Home extends React.Component {
 
     componentWillMount() {
         this.loadItem()
-
-        this.todayRef.on('child_added', data => {
-            const date = getThemeID()
-            const {name, path, url} = data.val()
-
-            this.setState({
-                todays: [{id: data.key, name, date, path, url}, ...this.state.todays]
-            })
-        })
-    }
-
-    componentWillUnmount() {
-        this.todayRef.off()
     }
 
     loadItem() {
@@ -88,14 +72,8 @@ export default class Home extends React.Component {
     }
 
     render() {
-        const todays = [
-            { photos: this.state.todays }
-        ]
-
         return (
             <div>
-                <Logout/>
-                <GalleryContainer data={todays} upload={true}/>
                 <GalleryContainer data={this.state.items}/>
                 <div style={{width: '250px', margin: '40px auto', textAlign: 'center'}}>
                     {this.state.isLoading ? 'Loading...' : <button className={`${style.btn} ${style.btnBlock} ${style.btnPrimary}`} onClick={this.loadItem}>Load more</button>}

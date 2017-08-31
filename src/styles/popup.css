@@ -41,8 +41,17 @@
     cursor: pointer;
 }
 
+.popup-body {
+    min-height: 100px;
+    background-color: white;
+}
+
 .popup-image {
     display: block;
     width: 100%;
     background: black;
+}
+
+.loading {
+    padding: 100px;
 }

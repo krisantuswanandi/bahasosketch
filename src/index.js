@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as firebase from 'firebase'
 
-import App from './components/App'
+import App from './hiatus/App'
 
 const devConfig = {
     apiKey: "AIzaSyBy6ff_NDaYxwRK5M6rlvojzmZnfBzGfCI",

@@ -13,17 +13,17 @@ export default class GalleryItem extends React.Component {
     }
 
     componentWillMount() {
-        const {photo: {id, date, path, url, thumb}} = this.props
+        const {photo: {id, date, path, url, image}} = this.props
 
-        if(thumb) {
-            this.setState({url: thumb})
+        if(image) {
+            this.setState({url: image})
         } else {
-            const thumbRef = firebase.storage().ref('popup/' + path)
-            thumbRef.getDownloadURL().then(url => {
+            const imageRef = firebase.storage().ref('popup/' + path)
+            imageRef.getDownloadURL().then(url => {
                 this.setState({url})
 
                 if(date) {
-                    thumbRef.updateMetadata({cacheControl: 'public,max-age=31536000'}).then(meta => {
+                    imageRef.updateMetadata({cacheControl: 'public,max-age=31536000'}).then(meta => {
                         const url = meta.downloadURLs[0]
 
                         let updates = {}

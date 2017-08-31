@@ -19,7 +19,7 @@ export default class Login extends React.Component {
             const {name, path, url} = data.val()
 
             this.setState({
-                photos: [{name, path, url}, ...this.state.photos]
+                photos: [{id: data.key, name, path, url}, ...this.state.photos]
             })
         })
     }
