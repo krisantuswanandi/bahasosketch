@@ -12,7 +12,7 @@ export default class Home extends React.Component {
 
         this.state = {
             items: [],
-            lastItem: 1,
+            lastItem: '20170831',
             isLoading: false
         }
 
@@ -24,12 +24,12 @@ export default class Home extends React.Component {
     }
 
     loadItem() {
-        const lastItem = this.state.lastItem
-        const countItem = 3
+        const countItem = 5
         this.setState({isLoading: true})
 
+        let lastItem = null
         let themes_photos = {}
-        const dbRef = firebase.database().ref('/themes_photos').orderByKey().endAt(getThemeIDFrom(lastItem)).limitToLast(countItem)
+        const dbRef = firebase.database().ref('/themes_photos').orderByKey().endAt(this.state.lastItem).limitToLast(countItem)
         dbRef.once('value').then(data => {
             themes_photos = data.val()
 
@@ -47,13 +47,16 @@ export default class Home extends React.Component {
                 const photosObj = themes_photos[date]
                 const themeDay = getThemeDay(date)
 
+                if(!lastItem) lastItem = date
+                this.themeDay = themeDay
+
                 const title = `DAY ${themeDay}`
                 const theme = `#${item.val()}`
                 const photos = []
 
                 for(const key in photosObj) {
-                    const {name, path, url} = photosObj[key]
-                    photos.push({id: key, name, date, path, url})
+                    const {name, image} = photosObj[key]
+                    photos.push({id: key, name, date, image})
                 }
                 photos.reverse()
 
@@ -62,8 +65,8 @@ export default class Home extends React.Component {
 
             this.setState({
                 items: [...this.state.items, ...items.reverse()],
-                lastItem: lastItem + countItem,
-                isLoading: false
+                isLoading: false,
+                lastItem: getThemeIDFrom(lastItem, 1)
             })
         }).catch(error => {
             console.log(error.message)
@@ -76,7 +79,7 @@ export default class Home extends React.Component {
             <div>
                 <GalleryContainer data={this.state.items}/>
                 <div style={{width: '250px', margin: '40px auto', textAlign: 'center'}}>
-                    {this.state.isLoading ? 'Loading...' : <button className={`${style.btn} ${style.btnBlock} ${style.btnPrimary}`} onClick={this.loadItem}>Load more</button>}
+                    {this.themeDay === 1 ? <div>:)</div> : (this.state.isLoading ? 'Loading...' : <button className={`${style.btn} ${style.btnBlock} ${style.btnPrimary}`} onClick={this.loadItem}>Load more</button>)}
                 </div>
             </div>
         )

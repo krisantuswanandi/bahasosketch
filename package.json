@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clear": "rimraf docs",
-    "build": "NODE_ENV=production npm run clear && webpack -p",
+    "build": "npm run clear && webpack -p --config webpack.prod.js",
     "serve": "webpack-dev-server"
   },
   "repository": {
