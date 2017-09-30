@@ -1,5 +1,12 @@
 import {START_DATE} from './constants'
 
+export const getStringDay = param => {
+    const date = param || new Date()
+    const day = ('0' + date.getDate()).slice(-2)
+
+    return day
+}
+
 export const getStringDate = param => {
     const date = param || new Date()
     const year = date.getFullYear()
