@@ -31,23 +31,42 @@ class GalleryContainer extends React.Component {
             const photos = []
             const datas = data.val()
 
-            for(const key in datas) {
-                const photosObj = datas[key]
+            for(const dataKey in datas) {
+                const photosObj = datas[dataKey]
 
-                for(const key in photosObj) {
-                    const {name, url} = photosObj[key]
+                for(const photoKey in photosObj) {
+                    const {name, url, thumb, popup, path} = photosObj[photoKey]
                     photos.push({
-                        id: key,
+                        id: photoKey,
                         type: 'photo',
                         name,
-                        url
+                        thumb,
+                        url: popup || url
                     })
+
+                    if(firebase.auth().currentUser) {
+                        if(!thumb) {
+                            firebase.storage().ref('inktoberthumb/' + path).getDownloadURL().then(function (url) {
+                                firebase.database().ref(`/inktober/${dataKey}/${photoKey}/thumb`).set(url.toString())
+                            }).catch(function () {
+                                console.log('no thumbnail for ', path);
+                            });
+                        }
+
+                        if(!popup) {
+                            firebase.storage().ref('inktober500/' + path).getDownloadURL().then(function (url) {
+                                firebase.database().ref(`/inktober/${dataKey}/${photoKey}/popup`).set(url.toString())
+                            }).catch(function () {
+                                console.log('no compressed image for ', path);
+                            });
+                        }
+                    }
                 }
 
                 photos.push({
-                    id: key,
+                    id: dataKey,
                     type: 'title',
-                    text: key
+                    text: dataKey
                 })
             }
 
@@ -65,13 +84,6 @@ class GalleryContainer extends React.Component {
             popupTitle,
             popupImage
         })
-
-        /*firebase.storage().ref('popup/' + popupImage).getDownloadURL().then(url => {
-            this.setState({
-            })
-        }).catch(error => {
-            console.log(error.message)
-        })*/
     }
 
     closePopup() {
@@ -86,7 +98,7 @@ class GalleryContainer extends React.Component {
         return this.state.images.map((image) => {
             switch(image.type) {
                 case 'photo':
-                    return <GalleryItem key={image.id} name={image.name} url={image.url} onClick={this.openPopup}/>
+                    return <GalleryItem key={image.id} name={image.name} thumb={image.thumb || image.url} url={image.url} onClick={this.openPopup}/>
                 case 'title':
                     return <GalleryTitle key={image.id} text={image.text}/>
                 default:
