@@ -13,8 +13,8 @@ class GalleryContainer extends React.Component {
 
         this.state = {
             images: [
-                {id: 'intro', type: 'credit', link: 'https://www.instagram.com/p/BYwaMrVHL8L/', url: 'https://scontent-sit4-1.cdninstagram.com/t51.2885-15/e35/20589776_2036009796621917_5055608602576814080_n.jpg'},
-                {id: 'themes', type: 'credit', link: 'https://www.instagram.com/p/BY6eKjZgJ1O/', url: 'https://scontent-sit4-1.cdninstagram.com/t51.2885-15/e35/21480388_1978463629031954_6072400641995571200_n.jpg'}
+                {id: 'intro', type: 'credit', link: 'https://www.instagram.com/p/BYwaMrVHL8L/', url: 'https://scontent-sin6-1.cdninstagram.com/vp/0ae22f254d32b17aefb6974634b4c068/5C23C643/t51.2885-15/e35/20589776_2036009796621917_5055608602576814080_n.jpg'},
+                {id: 'themes', type: 'credit', link: 'https://www.instagram.com/p/BY6eKjZgJ1O/', url: 'https://scontent-sin6-1.cdninstagram.com/vp/6ab379b13a7c18b9d334a6d16cd2f8f5/5C1CFD39/t51.2885-15/e35/21480388_1978463629031954_6072400641995571200_n.jpg'}
             ],
             isPopupOpen: false,
             popupImage: '',

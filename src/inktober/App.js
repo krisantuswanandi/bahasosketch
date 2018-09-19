@@ -42,8 +42,8 @@ export default class App extends React.Component {
             <div className={style.container}>
                 <Header/>
                 <Gallery/>
-                <Upload canUpload={this.state.isLoggedIn} onClick={this.openLogin.bind(this)}/>
-                {this.state.isLoginOpen && <Login onClose={this.closeLogin.bind(this)}/>}
+                {/* <Upload canUpload={this.state.isLoggedIn} onClick={this.openLogin.bind(this)}/>
+                {this.state.isLoginOpen && <Login onClose={this.closeLogin.bind(this)}/>} */}
             </div>
         )
     }
