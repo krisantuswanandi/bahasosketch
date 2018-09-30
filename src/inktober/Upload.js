@@ -4,6 +4,7 @@ import 'firebase/database'
 import 'firebase/storage'
 
 import Preview from './Preview'
+import Loading from './Loading'
 
 import {getStringDay, getStringDate, getStringTime} from '../utils/functions'
 import style from '../styles/upload.css'
@@ -26,7 +27,7 @@ export default class Upload extends React.Component {
             const fileName = getStringDate() + getStringTime() + fileExt
 
             this.setState({uploading: true})
-            const fileRef = firebase.storage().ref(`inktober/${fileName}`)
+            const fileRef = firebase.storage().ref(`inktober2018/${fileName}`)
             fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
                 return data.ref.getDownloadURL()
             }).then(downloadURL => {
@@ -78,6 +79,7 @@ export default class Upload extends React.Component {
                         image={this.state.imgPreview}
                         onConfirm={this.confirmUpload.bind(this)}
                         onCancel={this.clearUpload.bind(this)}/>}
+                    {this.state.uploading && <Loading/>}
                 </div>
             )
         } else {

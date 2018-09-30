@@ -6,7 +6,7 @@ const HTMLTemplate = require('html-webpack-plugin')
 module.exports = {
     entry: {
         bundle: './src/index',
-        vendor: ['react', 'react-dom', 'firebase']
+        vendor: ['react', 'react-dom', 'firebase/app', 'firebase/auth', 'firebase/database', 'firebase/storage']
     },
     output: {
         path: path.resolve(__dirname, 'docs'),

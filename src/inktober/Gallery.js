@@ -47,20 +47,23 @@ class GalleryContainer extends React.Component {
                     })
 
                     if(firebase.auth().currentUser) {
+                        const basefilename = path.lastIndexOf('.') < 0 ? path : path.substr(0, path.lastIndexOf('.'))
+                        const jpg = basefilename + '.jpg'
+
                         if(!thumb) {
-                            firebase.storage().ref('inktoberthumb/' + path).getDownloadURL().then(function (url) {
+                            firebase.storage().ref('inktober2018thumb/' + jpg).getDownloadURL().then(function (url) {
                                 firebase.database().ref(`/inktober2018/${dataKey}/${photoKey}/thumb`).set(url.toString())
                             }).catch(function () {
-                                console.log('no thumbnail for ', path);
-                            });
+                                console.log('no thumbnail for ', jpg)
+                            })
                         }
 
                         if(!popup) {
-                            firebase.storage().ref('inktober500/' + path).getDownloadURL().then(function (url) {
+                            firebase.storage().ref('inktober2018popup/' + jpg).getDownloadURL().then(function (url) {
                                 firebase.database().ref(`/inktober2018/${dataKey}/${photoKey}/popup`).set(url.toString())
                             }).catch(function () {
-                                console.log('no compressed image for ', path);
-                            });
+                                console.log('no compressed image for ', jpg)
+                            })
                         }
                     }
                 }

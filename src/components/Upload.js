@@ -1,5 +1,7 @@
 import React from 'react'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/storage'
 
 import {getStringDate, getStringTime, getThemeID} from '../utils/functions'
 import style from '../styles/upload.css'

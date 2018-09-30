@@ -1,5 +1,6 @@
 import React from 'react'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/storage'
 
 import GalleryItem from './GalleryItem'
 import Popup from './Popup'
