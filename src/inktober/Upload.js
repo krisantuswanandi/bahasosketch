@@ -1,5 +1,7 @@
 import React from 'react'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/storage'
 
 import Preview from './Preview'
 
@@ -26,9 +28,11 @@ export default class Upload extends React.Component {
             this.setState({uploading: true})
             const fileRef = firebase.storage().ref(`inktober/${fileName}`)
             fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
-                return firebase.database().ref('/inktober/' + getStringDay()).push({
+                return data.ref.getDownloadURL()
+            }).then(downloadURL => {
+                return firebase.database().ref('/inktober2018/' + getStringDay()).push({
                     name: firebase.auth().currentUser.email,
-                    url: data.metadata.downloadURLs[0],
+                    url: downloadURL,
                     path: fileName
                 })
             }).then(() => {

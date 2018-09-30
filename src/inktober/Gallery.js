@@ -1,5 +1,7 @@
 import React from 'react'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/storage'
 
 import GalleryItem from './GalleryItem'
 import GalleryTitle from './GalleryTitle'
@@ -13,8 +15,8 @@ class GalleryContainer extends React.Component {
 
         this.state = {
             images: [
-                {id: 'intro', type: 'credit', link: 'https://www.instagram.com/p/BYwaMrVHL8L/', url: 'https://scontent-sin6-1.cdninstagram.com/vp/0ae22f254d32b17aefb6974634b4c068/5C23C643/t51.2885-15/e35/20589776_2036009796621917_5055608602576814080_n.jpg'},
-                {id: 'themes', type: 'credit', link: 'https://www.instagram.com/p/BY6eKjZgJ1O/', url: 'https://scontent-sin6-1.cdninstagram.com/vp/6ab379b13a7c18b9d334a6d16cd2f8f5/5C1CFD39/t51.2885-15/e35/21480388_1978463629031954_6072400641995571200_n.jpg'}
+                {id: 'intro', type: 'credit', link: 'https://www.instagram.com/p/BnT1LhRgard/', url: 'https://scontent-sit4-1.cdninstagram.com/vp/4c84bbb0f608fc3eead1606ad2703750/5C56766E/t51.2885-15/e35/40432064_560631531021277_1406291162821026460_n.jpg'},
+                {id: 'themes', type: 'credit', link: 'https://www.instagram.com/p/BnL2dxfg8Uq/', url: 'https://scontent-sit4-1.cdninstagram.com/vp/59f6ee7e0f9cbb3fc8606ac72b4e91c5/5C4330DC/t51.2885-15/e35/39815925_407430529786848_2695135490553675776_n.jpg'}
             ],
             isPopupOpen: false,
             popupImage: '',
@@ -26,7 +28,7 @@ class GalleryContainer extends React.Component {
     }
 
     componentDidMount() {
-        const dbRef = firebase.database().ref('/inktober')
+        const dbRef = firebase.database().ref('/inktober2018')
         dbRef.once('value').then(data => {
             const photos = []
             const datas = data.val()
@@ -47,7 +49,7 @@ class GalleryContainer extends React.Component {
                     if(firebase.auth().currentUser) {
                         if(!thumb) {
                             firebase.storage().ref('inktoberthumb/' + path).getDownloadURL().then(function (url) {
-                                firebase.database().ref(`/inktober/${dataKey}/${photoKey}/thumb`).set(url.toString())
+                                firebase.database().ref(`/inktober2018/${dataKey}/${photoKey}/thumb`).set(url.toString())
                             }).catch(function () {
                                 console.log('no thumbnail for ', path);
                             });
@@ -55,7 +57,7 @@ class GalleryContainer extends React.Component {
 
                         if(!popup) {
                             firebase.storage().ref('inktober500/' + path).getDownloadURL().then(function (url) {
-                                firebase.database().ref(`/inktober/${dataKey}/${photoKey}/popup`).set(url.toString())
+                                firebase.database().ref(`/inktober2018/${dataKey}/${photoKey}/popup`).set(url.toString())
                             }).catch(function () {
                                 console.log('no compressed image for ', path);
                             });

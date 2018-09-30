@@ -1,5 +1,6 @@
 import React from 'react'
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 import Header from './Header'
 import Footer from './Footer'
@@ -42,8 +43,8 @@ export default class App extends React.Component {
             <div className={style.container}>
                 <Header/>
                 <Gallery/>
-                {/* <Upload canUpload={this.state.isLoggedIn} onClick={this.openLogin.bind(this)}/>
-                {this.state.isLoginOpen && <Login onClose={this.closeLogin.bind(this)}/>} */}
+                <Upload canUpload={this.state.isLoggedIn} onClick={this.openLogin.bind(this)}/>
+                {this.state.isLoginOpen && <Login onClose={this.closeLogin.bind(this)}/>}
             </div>
         )
     }
