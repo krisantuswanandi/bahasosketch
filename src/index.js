@@ -1,27 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import firebase from 'firebase/app'
 
-import App from './inktober/App'
+import App from './App'
 
-const devConfig = {
-    apiKey: "AIzaSyBy6ff_NDaYxwRK5M6rlvojzmZnfBzGfCI",
-    authDomain: "fir-bahaso.firebaseapp.com",
-    databaseURL: "https://fir-bahaso.firebaseio.com",
-    projectId: "fir-bahaso",
-    storageBucket: "fir-bahaso.appspot.com",
-    messagingSenderId: "134825814680"
-};
+import registerFirebase from './registerFirebase'
+import registerServiceWorker from './registerServiceWorker'
 
-const prodConfig = {
-    apiKey: 'AIzaSyBd-we3DS2sZBhExI-VdJrNyKypR_qFAEI',
-    authDomain: 'bahaso-sketch.firebaseapp.com',
-    databaseURL: 'https://bahaso-sketch.firebaseio.com',
-    projectId: 'bahaso-sketch',
-    storageBucket: 'bahaso-sketch.appspot.com',
-    messagingSenderId: '267090960672'
-}
+registerFirebase()
+registerServiceWorker()
 
-firebase.initializeApp(prodConfig)
-
-ReactDOM.render(<App/>, document.getElementById('container'))
+ReactDOM.render(<App/>, document.getElementById('root'))
