@@ -2,7 +2,7 @@ import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import style from '../styles/form.css'
+import style from '../../styles/form.css'
 
 export default class LoginForm extends React.Component {
     constructor() {

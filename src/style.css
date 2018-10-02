@@ -1,0 +1,339 @@
+/* index.css */
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+header {
+    max-width: 300px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+button {
+    width: 100%;
+    padding: 20px 0;
+    border: none;
+    color: white;
+    background-color: black;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.header-logo {
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+/* upload.css */
+.upload-file-input {
+    display: none;
+}
+
+.upload-file-button {
+    display: block;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    line-height: 56px;
+    margin-left: -25px;
+    padding: 0;
+    border-radius: 50%;
+    color: white;
+    background-color: black;
+    font-size: 50px;
+    font-weight: 300;
+    text-align: center;
+    cursor: pointer;
+}
+
+.preview-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+.preview-button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 30px 10px;
+    background: white;
+}
+
+.confirm-button {
+    display: block;
+    max-width: 400px;
+    margin: auto;
+}
+
+.cancel {
+    margin-top: 5px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .8);
+    color: white;
+    font-size: 18px;
+    z-index: 99;
+}
+
+/* gallery.css */
+.gallery-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 5px;
+}
+
+.gallery {
+    margin-bottom: 10px;
+}
+
+.gallery-items {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.gallery-item {
+    position: relative;
+    display: block;
+    width: 25%;
+    padding: 2px;
+}
+
+.gallery-image {
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+.gallery-image > span {
+    display: none;
+}
+
+.gallery-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.gallery-title > .text {
+    font-size: 90px;
+}
+
+@media (max-width: 600px) {
+    .gallery-item {
+        width: 33.33333%;
+    }
+
+    .gallery-title {
+        font-size: 12px;
+    }
+
+    .gallery-title > .text {
+        font-size: 50px;
+    }
+}
+
+/* form.css */
+.form-container {
+    max-width: 250px;
+    margin: auto;
+}
+
+.form-input-container {
+    margin-top: 5px;
+}
+
+.form-input-error {
+    padding-top: 2px;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-input-separator {
+    padding: 2px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #42ABE0;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.btn-primary[disabled],
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: #bcd9e8;
+    pointer-events: none;
+}
+
+.btn-google {
+    color: white;
+    background-color: #367CFF;
+    font-weight: 700;
+}
+
+/* login.css */
+.login-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+.login-container {
+    max-width: 250px;
+}
+
+.logo {
+    width: 100%;
+}
+
+.cancel {
+    margin-top: 10px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* popup.css */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    margin: auto;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, .5);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.popup-dialog {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.popup-header {
+    background: white;
+    border-bottom: 1px solid #CCCCCC;
+    text-align: left;
+}
+
+.popup-title {
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 10px;
+    width: 85%;
+}
+
+.popup-close {
+    padding: 10px 15px;
+    float: right;
+    cursor: pointer;
+}
+
+.popup-body {
+    min-height: 100px;
+    background-color: white;
+}
+
+.popup-image {
+    display: block;
+    width: 100%;
+    background: black;
+}
+
+.popup-loading {
+    padding: 100px;
+}

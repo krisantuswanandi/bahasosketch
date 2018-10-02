@@ -1,30 +1,23 @@
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/database'
 
 import Header from './Header'
-import Footer from './Footer'
+import Upload from './Upload'
 import Login from './Login'
-import Home from './Home'
+import Gallery from './Gallery'
 
-import {getThemeID} from '../utils/functions'
-import {DEFAULT_THEME, DEFAULT_THEME_ID} from '../utils/constants'
-import style from '../styles/index.css'
-
-export default class App extends React.Component {
+class App extends React.Component {
     constructor() {
         super()
 
         this.state = {
-            themeId: '',
-            theme: '',
-            isLoggedIn: true
+            isLoggedIn: false,
+            isLoginOpen: false
         }
     }
 
     componentWillMount() {
-        //authentication
         firebase.auth().onAuthStateChanged(user => {
             if(!user) {
                 this.setState({isLoggedIn: false})
@@ -32,33 +25,26 @@ export default class App extends React.Component {
                 this.setState({isLoggedIn: true})
             }
         })
+    }
 
-        //today's theme
-        const todaysThemeId = getThemeID()
-        firebase.database().ref(`/themes/${todaysThemeId}`).once('value').then(data => {
-            if(data.exists()) {
-                this.setState({
-                    themeId: data.key,
-                    theme: '#' + data.val()
-                })
-            } else {
-                this.setState({
-                    themeId: DEFAULT_THEME_ID,
-                    theme: '#' + DEFAULT_THEME
-                })
-            }
-        })
+    openLogin() {
+        this.setState({isLoginOpen: true})
+    }
+
+    closeLogin() {
+        this.setState({isLoginOpen: false})
     }
 
     render() {
-        const body = this.state.isLoggedIn ? <Home/> : <Login/>
-
         return (
-            <div className={style.container}>
-                <Header theme={this.state.theme}/>
-                {body}
-                <Footer/>
+            <div className="container">
+                <Header/>
+                <Gallery/>
+                <Upload canUpload={this.state.isLoggedIn} onClick={this.openLogin.bind(this)}/>
+                {this.state.isLoginOpen && <Login onClose={this.closeLogin.bind(this)}/>}
             </div>
         )
     }
 }
+
+export default App

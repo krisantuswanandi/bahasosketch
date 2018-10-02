@@ -1,6 +1,6 @@
 import React from 'react'
 
-import style from '../styles/gallery.css'
+import style from '../../styles/gallery.css'
 
 export default ({photo: {name, image}, click}) => (
     <div className={style.galleryItem}>

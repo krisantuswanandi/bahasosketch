@@ -1,6 +1,6 @@
 import React from 'react'
 
-import image from '../images/logo.png'
+import image from '../../images/logo.png'
 import style from '../styles/header.css'
 
 export default ({theme}) => (

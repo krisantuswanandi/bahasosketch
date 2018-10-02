@@ -1,6 +1,6 @@
 import React from 'react'
 
-import style from '../styles/popup.css'
+import style from '../../styles/popup.css'
 
 export default class Popup extends React.Component {
     componentWillMount() {

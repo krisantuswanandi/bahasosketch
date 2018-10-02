@@ -1,46 +1,42 @@
 import React from 'react'
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/auth'
 
-import LoginForm from './LoginForm'
-import GalleryContainer from './GalleryContainer'
+import logo from '../images/inktoberv.png'
 
 export default class Login extends React.Component {
-    constructor() {
-        super()
-
-        this.dbRef = firebase.database().ref('/photos').limitToLast(18)
-        this.state = {
-            photos: []
-        }
-    }
-
     componentWillMount() {
-        this.dbRef.on('child_added', data => {
-            const {name, path, url} = data.val()
-
-            this.setState({
-                photos: [{id: data.key, name, path, url}, ...this.state.photos]
-            })
-        })
+        document.body.style.overflow = 'hidden'
     }
 
     componentWillUnmount() {
-        this.dbRef.off()
+        document.body.style.overflow = 'auto'
     }
 
     render() {
-        const explore = [
-            {
-                theme: '#EXPLORE',
-                photos: this.state.photos
-            }
-        ]
-
         return (
-            <div>
-                <LoginForm/>
-                <GalleryContainer data={explore}/>
+            <div className="login-wrapper">
+                <div className="login-container">
+                    <div>
+                        <img className="logo" src={logo} alt="Bahaso X Inktober"/>
+                    </div>
+                    <div>
+                        <button className="login-button"
+                            onClick={() => {
+                                const provider = new firebase.auth.GoogleAuthProvider()
+
+                                firebase.auth().signInWithPopup(provider).then(() => {
+                                    this.props.onClose()
+                                }).catch(error => {
+                                    this.setState({error: error.message})
+                                })
+                            }}
+                        >Google Sign In</button>
+                    </div>
+                    <div className="cancel" onClick={this.props.onClose}>
+                        Cancel
+                    </div>
+                </div>
             </div>
         )
     }

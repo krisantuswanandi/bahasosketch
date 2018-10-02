@@ -3,13 +3,39 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
 
-import {getStringDate, getStringTime, getThemeID} from '../utils/functions'
-import style from '../styles/upload.css'
-import styleBtn from '../styles/form.css'
+import Preview from './Preview'
+import Loading from './Loading'
 
-export default class Upload extends React.Component {
-    constructor() {
-        super()
+const getStringDay = param => {
+    const date = param || new Date()
+    const day = ('0' + date.getDate()).slice(-2)
+
+    return day
+}
+
+const getStringDate = param => {
+    const date = param || new Date()
+    const year = date.getFullYear()
+    const month = ('0' + (date.getMonth() + 1)).slice(-2)
+    const day = ('0' + date.getDate()).slice(-2)
+
+    return year + '' + month + '' + day
+}
+
+const getStringTime = param => {
+    const time = param || new Date()
+    const hour = ('0' + time.getHours()).slice(-2)
+    const minute = ('0' + time.getMinutes()).slice(-2)
+    const second = ('0' + time.getSeconds()).slice(-2)
+
+    return hour + '' + minute + '' + second
+}
+
+const fd = 'inktober2018'
+
+class Upload extends React.Component {
+    constructor(props) {
+        super(props)
 
         this.state = {
             file: null,
@@ -21,26 +47,21 @@ export default class Upload extends React.Component {
     confirmUpload() {
         if(this.state.file) {
             const file = this.state.file
-            const fileExt = file.name.slice((file.name.lastIndexOf(".") - 1 >>> 0) + 1)
+            const fileExt = file.name.slice((file.name.lastIndexOf('.') - 1 >>> 0) + 1)
             const fileName = getStringDate() + getStringTime() + fileExt
 
             this.setState({uploading: true})
-            const fileRef = firebase.storage().ref(`photo/${fileName}`)
+            const fileRef = firebase.storage().ref(`${fd}/${fileName}`)
             fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
-                const newPostKey = firebase.database().ref('/photos').push().key
-                const newPost = {
+                return data.ref.getDownloadURL()
+            }).then(downloadURL => {
+                return firebase.database().ref(`/${fd}/${getStringDay()}`).push({
                     name: firebase.auth().currentUser.email,
-                    url: data.metadata.downloadURLs[0],
+                    url: downloadURL,
                     path: fileName
-                }
-
-                let updates = {}
-                updates['/photos/' + newPostKey] = newPost
-                updates['/themes_photos/' + getThemeID() + '/' + newPostKey] = newPost
-
-                return firebase.database().ref().update(updates)
+                })
             }).then(() => {
-                this.clearUpload()
+                window.location.replace('/')
             }).catch((error) => {
                 console.log(error)
                 alert('Connection error!')
@@ -72,24 +93,27 @@ export default class Upload extends React.Component {
     }
 
     render() {
-        let bgImg = ''
-        let containerState = style.uploadButtonContainer
-
-        if(this.state.imgPreview !== '') {
-            bgImg = `url(${this.state.imgPreview})`
-            containerState = `${style.uploadButtonContainer} ${style.active}`
-        }
-
-        return (
-            <div className={style.uploadItem}>
-                <label className={style.uploadFileButton} style={{backgroundImage: bgImg}}>
-                    <input ref="file" type="file" className={style.uploadFileInput} onChange={this.handleFiles.bind(this)}/>
-                </label>
-                <div className={containerState}>
-                    <button className={`${styleBtn.btn} ${styleBtn.btnPrimary}`} disabled={this.state.uploading} onClick={this.confirmUpload.bind(this)}>Upload</button>
-                    <button className={`${styleBtn.btn} ${styleBtn.btnPrimary}`} disabled={this.state.uploading} onClick={this.clearUpload.bind(this)}>Cancel</button>
+        if(this.props.canUpload) {
+            return (
+                <div>
+                    <label className="upload-file-button">+
+                        <input ref="file" type="file" className="upload-file-input" onChange={this.handleFiles.bind(this)}/>
+                    </label>
+                    {this.state.imgPreview && <Preview
+                        image={this.state.imgPreview}
+                        onConfirm={this.confirmUpload.bind(this)}
+                        onCancel={this.clearUpload.bind(this)}/>}
+                    {this.state.uploading && <Loading/>}
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div>
+                    <button className="upload-file-button" onClick={this.props.onClick}>+</button>
+                </div>
+            )
+        }
     }
 }
+
+export default Upload

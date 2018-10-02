@@ -2,7 +2,7 @@ import React from 'react'
 
 import GalleryItem from './GalleryItem'
 import Popup from './Popup'
-import style from '../styles/gallery.css'
+import style from '../../styles/gallery.css'
 
 export default class Gallery extends React.Component {
     constructor() {

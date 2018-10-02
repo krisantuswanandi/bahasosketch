@@ -6,7 +6,7 @@ import Logout from './Logout'
 import GalleryContainer from './GalleryContainer'
 import {getThemeID, getThemeDay, getThemeIDFrom} from '../utils/functions'
 
-import style from '../styles/form.css'
+import style from '../../styles/form.css'
 
 export default class Home extends React.Component {
     constructor() {

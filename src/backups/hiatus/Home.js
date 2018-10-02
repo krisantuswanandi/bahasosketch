@@ -5,7 +5,7 @@ import 'firebase/database'
 import GalleryContainer from './GalleryContainer'
 import {getThemeDay, getThemeIDFrom} from '../utils/functions'
 
-import style from '../styles/form.css'
+import style from '../../styles/form.css'
 
 export default class Home extends React.Component {
     constructor(props) {
