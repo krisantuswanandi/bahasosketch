@@ -1,16 +1,11 @@
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/database'
-import 'firebase/storage'
 
 import GalleryItem from './GalleryItem'
 import GalleryTitle from './GalleryTitle'
 import GalleryLink from './GalleryLink'
 import Popup from './Popup'
-
-const fd = 'inktober2018'
-const popupfd = fd + 'popup'
-const thumbfd = fd + 'thumb'
 
 class GalleryContainer extends React.Component {
     constructor(props) {
@@ -31,7 +26,7 @@ class GalleryContainer extends React.Component {
     }
 
     componentDidMount() {
-        const dbRef = firebase.database().ref('/' + fd)
+        const dbRef = firebase.database().ref('/inktober2018')
         dbRef.once('value').then(data => {
             const photos = []
             const datas = data.val()
@@ -40,35 +35,14 @@ class GalleryContainer extends React.Component {
                 const photosObj = datas[dataKey]
 
                 for(const photoKey in photosObj) {
-                    const {name, url, thumb, popup, path} = photosObj[photoKey]
+                    const {name, thumb, popup} = photosObj[photoKey]
                     photos.push({
                         id: photoKey,
                         type: 'photo',
                         name,
                         thumb,
-                        url: popup || url
+                        popup
                     })
-
-                    if(firebase.auth().currentUser) {
-                        const basefilename = path.lastIndexOf('.') < 0 ? path : path.substr(0, path.lastIndexOf('.'))
-                        const jpg = basefilename + '.jpg'
-
-                        if(!thumb) {
-                            firebase.storage().ref(`${thumbfd}/${jpg}`).getDownloadURL().then(function (url) {
-                                firebase.database().ref(`/${fd}/${dataKey}/${photoKey}/thumb`).set(url.toString())
-                            }).catch(function () {
-                                console.log('no thumbnail for ', jpg)
-                            })
-                        }
-
-                        if(!popup) {
-                            firebase.storage().ref(`${popupfd}/${jpg}`).getDownloadURL().then(function (url) {
-                                firebase.database().ref(`/${fd}/${dataKey}/${photoKey}/popup`).set(url.toString())
-                            }).catch(function () {
-                                console.log('no compressed image for ', jpg)
-                            })
-                        }
-                    }
                 }
 
                 photos.push({
@@ -106,7 +80,7 @@ class GalleryContainer extends React.Component {
         return this.state.images.map((image) => {
             switch(image.type) {
                 case 'photo':
-                    return <GalleryItem key={image.id} name={image.name} thumb={image.thumb || image.url} url={image.url} onClick={this.openPopup}/>
+                    return <GalleryItem key={image.id} name={image.name} thumb={image.thumb || image.popup} url={image.popup} onClick={this.openPopup}/>
                 case 'title':
                     return <GalleryTitle key={image.id} text={image.text}/>
                 default:

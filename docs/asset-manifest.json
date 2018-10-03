@@ -1,15 +1,15 @@
 {
-  "main.css": "/static/css/main.e3218b65.chunk.css",
-  "main.js": "/static/js/main.cfceb607.chunk.js",
-  "main.js.map": "/static/js/main.cfceb607.chunk.js.map",
-  "static/js/1.edde28e4.chunk.js": "/static/js/1.edde28e4.chunk.js",
-  "static/js/1.edde28e4.chunk.js.map": "/static/js/1.edde28e4.chunk.js.map",
+  "main.css": "/static/css/main.42b4b417.chunk.css",
+  "main.js": "/static/js/main.3980aacd.chunk.js",
+  "main.js.map": "/static/js/main.3980aacd.chunk.js.map",
+  "static/js/1.5f594311.chunk.js": "/static/js/1.5f594311.chunk.js",
+  "static/js/1.5f594311.chunk.js.map": "/static/js/1.5f594311.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/main.e3218b65.chunk.css.map": "/static/css/main.e3218b65.chunk.css.map",
+  "static/css/main.42b4b417.chunk.css.map": "/static/css/main.42b4b417.chunk.css.map",
   "static/media/inktoberh.png": "/static/media/inktoberh.47404842.png",
   "static/media/inktoberv.png": "/static/media/inktoberv.b2adec7f.png",
   "index.html": "/index.html",
-  "precache-manifest.35f932c961e63a3693564e3fdd64a929.js": "/precache-manifest.35f932c961e63a3693564e3fdd64a929.js",
+  "precache-manifest.f91aaea6b68c5776c640843e8d308d71.js": "/precache-manifest.f91aaea6b68c5776c640843e8d308d71.js",
   "service-worker.js": "/service-worker.js"
 }

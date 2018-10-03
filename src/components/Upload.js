@@ -13,24 +13,6 @@ const getStringDay = param => {
     return day
 }
 
-const getStringDate = param => {
-    const date = param || new Date()
-    const year = date.getFullYear()
-    const month = ('0' + (date.getMonth() + 1)).slice(-2)
-    const day = ('0' + date.getDate()).slice(-2)
-
-    return year + '' + month + '' + day
-}
-
-const getStringTime = param => {
-    const time = param || new Date()
-    const hour = ('0' + time.getHours()).slice(-2)
-    const minute = ('0' + time.getMinutes()).slice(-2)
-    const second = ('0' + time.getSeconds()).slice(-2)
-
-    return hour + '' + minute + '' + second
-}
-
 const fd = 'inktober2018'
 
 class Upload extends React.Component {
@@ -46,27 +28,33 @@ class Upload extends React.Component {
 
     confirmUpload() {
         if(this.state.file) {
+            const db = firebase.database()
+            const storage = firebase.storage()
+            const stringDay = getStringDay()
+            const config = {cacheControl: 'public,max-age=31536000'}
+
             const file = this.state.file
             const fileExt = file.name.slice((file.name.lastIndexOf('.') - 1 >>> 0) + 1)
-            const fileName = getStringDate() + getStringTime() + fileExt
+            const fileDbRef = db.ref(`/${fd}/${stringDay}`)
+            const fileKey = fileDbRef.push().key
+            const fileName = stringDay + fileKey + fileExt
+            const fileRef = storage.ref(`${fd}/${fileName}`)
 
             this.setState({uploading: true})
-            const fileRef = firebase.storage().ref(`${fd}/${fileName}`)
-            fileRef.put(file, {cacheControl: 'public,max-age=31536000'}).then(data => {
-                return data.ref.getDownloadURL()
-            }).then(downloadURL => {
-                return firebase.database().ref(`/${fd}/${getStringDay()}`).push({
+            fileRef.put(file, config)
+                .then(data => data.ref.getDownloadURL())
+                .then(downloadURL => fileDbRef.child(fileKey).set({
                     name: firebase.auth().currentUser.email,
-                    url: downloadURL,
-                    path: fileName
+                    popup: downloadURL
+                }))
+                .then(() => {
+                    window.location.replace('/')
                 })
-            }).then(() => {
-                window.location.replace('/')
-            }).catch((error) => {
-                console.log(error)
-                alert('Connection error!')
-                this.clearUpload()
-            })
+                .catch(error => {
+                    console.log(error)
+                    alert('Connection error!')
+                    this.clearUpload()
+                })
         }
     }
 
