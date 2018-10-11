@@ -1,6 +1,6 @@
 import React from 'react'
 
-import image from '../images/inktoberh.png'
+import image from '../assets/images/inktoberh.png'
 
 const Header = () => (
     <header>

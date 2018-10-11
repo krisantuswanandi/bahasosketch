@@ -1,7 +1,7 @@
 import React from 'react'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import {connect} from 'react-redux'
+import {user} from '../actions'
 
-const Logout = () => <button onClick={() => {firebase.auth().signOut()}}>LOGOUT</button>
+const Logout = ({logout}) => <button className="logout-button" onClick={logout}>LOGOUT</button>
 
-export default Logout
+export default connect(null, {logout: user.logout})(Logout)

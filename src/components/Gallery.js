@@ -1,21 +1,17 @@
 import React from 'react'
-import firebase from 'firebase/app'
-import 'firebase/database'
+import {connect} from 'react-redux'
 
 import GalleryItem from './GalleryItem'
 import GalleryTitle from './GalleryTitle'
 import GalleryLink from './GalleryLink'
 import Popup from './Popup'
+import {pictures} from '../actions'
 
 class GalleryContainer extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            images: [
-                {id: 'intro', type: 'credit', link: 'https://www.instagram.com/p/BnT1LhRgard/', url: 'https://scontent-sit4-1.cdninstagram.com/vp/4c84bbb0f608fc3eead1606ad2703750/5C56766E/t51.2885-15/e35/40432064_560631531021277_1406291162821026460_n.jpg'},
-                {id: 'themes', type: 'credit', link: 'https://www.instagram.com/p/BnL2dxfg8Uq/', url: 'https://scontent-sit4-1.cdninstagram.com/vp/59f6ee7e0f9cbb3fc8606ac72b4e91c5/5C4330DC/t51.2885-15/e35/39815925_407430529786848_2695135490553675776_n.jpg'}
-            ],
             isPopupOpen: false,
             popupImage: '',
             popupTitle: ''
@@ -26,38 +22,7 @@ class GalleryContainer extends React.Component {
     }
 
     componentDidMount() {
-        const dbRef = firebase.database().ref('/inktober2018')
-        dbRef.once('value').then(data => {
-            const photos = []
-            const datas = data.val()
-
-            for(const dataKey in datas) {
-                const photosObj = datas[dataKey]
-
-                for(const photoKey in photosObj) {
-                    const {name, thumb, popup} = photosObj[photoKey]
-                    photos.push({
-                        id: photoKey,
-                        type: 'photo',
-                        name,
-                        thumb,
-                        popup
-                    })
-                }
-
-                photos.push({
-                    id: dataKey,
-                    type: 'title',
-                    text: dataKey
-                })
-            }
-
-            this.setState({
-                images: [...photos.reverse(), ...this.state.images]
-            })
-        }).catch(error => {
-            console.log(error.message)
-        })
+        this.props.loadData('/inktober2018')
     }
 
     openPopup(popupTitle, popupImage) {
@@ -76,17 +41,25 @@ class GalleryContainer extends React.Component {
         })
     }
 
-    renderImages() {
-        return this.state.images.map((image) => {
-            switch(image.type) {
-                case 'photo':
-                    return <GalleryItem key={image.id} name={image.name} thumb={image.thumb || image.popup} url={image.popup} onClick={this.openPopup}/>
-                case 'title':
-                    return <GalleryTitle key={image.id} text={image.text}/>
-                default:
-                    return <GalleryLink key={image.id} url={image.url} link={image.link}/>
-            }
+    renderPictures() {
+        const result = []
+        const {pictures} = this.props
+
+        result.push(<GalleryLink key="intro" link="https://www.instagram.com/p/BnT1LhRgard/" url="https://scontent-sit4-1.cdninstagram.com/vp/4c84bbb0f608fc3eead1606ad2703750/5C56766E/t51.2885-15/e35/40432064_560631531021277_1406291162821026460_n.jpg"/>)
+        result.push(<GalleryLink key="themes" link="https://www.instagram.com/p/BnL2dxfg8Uq/" url="https://scontent-sit4-1.cdninstagram.com/vp/59f6ee7e0f9cbb3fc8606ac72b4e91c5/5C4330DC/t51.2885-15/e35/39815925_407430529786848_2695135490553675776_n.jpg"/>)
+        Object.keys(pictures).sort().forEach(picturessKey => {
+            const picturess = pictures[picturessKey]
+
+            Object.keys(picturess).forEach(pictureKey => {
+                const picture = picturess[pictureKey]
+
+                result.push(<GalleryItem key={pictureKey} name={picture.name} thumb={picture.thumb} url={picture.popup} onClick={this.openPopup}/>)
+            })
+
+            result.push(<GalleryTitle key={picturessKey} text={picturessKey}/>)
         })
+
+        return result.reverse()
     }
 
     render() {
@@ -95,7 +68,7 @@ class GalleryContainer extends React.Component {
                 {this.state.isPopupOpen && <Popup title={this.state.popupTitle} image={this.state.popupImage} close={this.closePopup}/>}
                 <div className="gallery">
                     <div className="gallery-items">
-                        {this.renderImages()}
+                        {this.renderPictures()}
                     </div>
                 </div>
             </div>
@@ -103,4 +76,6 @@ class GalleryContainer extends React.Component {
     }
 }
 
-export default GalleryContainer
+export default connect(({pictures}) => ({
+    pictures
+}), {loadData: pictures.getPictures})(GalleryContainer)

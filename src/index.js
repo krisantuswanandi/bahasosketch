@@ -1,13 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './components/App'
-import './style.css'
+import Root from './Root'
+import './assets/styles/style.css'
 
-import registerFirebase from './registerFirebase'
 import registerServiceWorker from './registerServiceWorker'
 
-registerFirebase(true)
 registerServiceWorker()
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+ReactDOM.render(<Root/>, document.getElementById('root'))
