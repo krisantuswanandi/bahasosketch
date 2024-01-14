@@ -1,8 +1,8 @@
 import image from "../assets/images/inktoberh.png";
 
 const Header = () => (
-  <header>
-    <img className="header-logo" src={image} alt="Bahaso Sketch Logo" />
+  <header className="flex justify-center py-4">
+    <img src={image} width="300px" alt="Bahaso Sketch" />
   </header>
 );
 

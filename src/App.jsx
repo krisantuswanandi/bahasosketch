@@ -6,6 +6,7 @@ import Upload from './components/Upload'
 import LoginModal from './components/LoginModal'
 import Logout from './components/Logout'
 import Gallery from './components/Gallery'
+import Button from './components/Button'
 
 import {user} from './actions'
 
@@ -28,13 +29,13 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="m-auto max-w-screen-lg p-2">
                 <Header/>
                 <Gallery/>
                 {this.props.isLoggedIn && <Upload/>}
                 {this.state.isLoginOpen && <LoginModal onClose={this.closeLogin.bind(this)}/>}
                 {this.props.isLoggedIn ? <Logout/> : <div>
-                    <button className="upload-file-button" onClick={this.openLogin.bind(this)}>+</button>
+                    <Button className="rounded-full fixed right-10 bottom-10 w-16 h-16 text-4xl leading-none" onClick={this.openLogin.bind(this)}>+</Button>
                 </div>}
             </div>
         )

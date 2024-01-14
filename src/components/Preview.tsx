@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Button from "./Button";
 
 interface Props {
   title: string;
@@ -16,16 +17,19 @@ const Popup = ({ image, onConfirm, onCancel }: Props) => {
   }, []);
 
   return (
-    <div className="preview-container">
-      <div
-        className="preview-image"
-        style={{ backgroundImage: `url(${image})` }}
-      ></div>
-      <div className="preview-button">
-        <button className="confirm-button" onClick={onConfirm}>
+    <div className="fixed inset-0 bg-white">
+      <img src={image} className="h-full w-full object-contain" />
+      <div className="absolute bottom-0 left-0 right-0 bg-white px-2 py-7">
+        <Button
+          className="m-auto w-full max-w-80 py-4 font-bold"
+          onClick={onConfirm}
+        >
           Upload
-        </button>
-        <div className="cancel" onClick={onCancel}>
+        </Button>
+        <div
+          className="mt-3 text-center font-bold underline"
+          onClick={onCancel}
+        >
           Cancel
         </div>
       </div>

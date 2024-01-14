@@ -6,15 +6,14 @@ interface Props {
 }
 
 const GalleryItem = ({ name, thumb, url, onClick }: Props) => (
-  <div className="gallery-item">
-    <div
-      className="gallery-image"
-      style={{ backgroundImage: `url(${thumb})` }}
-      onClick={() => {
-        onClick(name, url);
-      }}
-    />
-  </div>
+  <img
+    className="aspect-square"
+    src={thumb}
+    alt={name}
+    onClick={() => {
+      onClick(name, url);
+    }}
+  />
 );
 
 export default GalleryItem;

@@ -4,17 +4,9 @@ interface Props {
 }
 
 const GalleryLink = ({ url, link }: Props) => (
-  <div className="gallery-item">
-    <a
-      href={link}
-      className="gallery-image"
-      style={{ backgroundImage: `url(${url})` }}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span>&nbsp;</span>
-    </a>
-  </div>
+  <a href={link} target="_blank" rel="noopener noreferrer">
+    <img src={url} alt={link} />
+  </a>
 );
 
 export default GalleryLink;

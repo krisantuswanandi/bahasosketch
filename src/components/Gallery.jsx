@@ -45,8 +45,8 @@ class GalleryContainer extends React.Component {
         const result = []
         const {pictures} = this.props
 
-        result.push(<GalleryLink key="intro" link="https://www.instagram.com/p/BnT1LhRgard/" url="https://scontent-sit4-1.cdninstagram.com/vp/4c84bbb0f608fc3eead1606ad2703750/5C56766E/t51.2885-15/e35/40432064_560631531021277_1406291162821026460_n.jpg"/>)
-        result.push(<GalleryLink key="themes" link="https://www.instagram.com/p/BnL2dxfg8Uq/" url="https://scontent-sit4-1.cdninstagram.com/vp/59f6ee7e0f9cbb3fc8606ac72b4e91c5/5C4330DC/t51.2885-15/e35/39815925_407430529786848_2695135490553675776_n.jpg"/>)
+        result.push(<GalleryLink key="intro" link="https://www.instagram.com/p/BnT1LhRgard/" url="https://images.squarespace-cdn.com/content/v1/5af1bd791aef1d143f85e67e/ee774b75-e4fd-4928-8dd7-834bbefb5ee7/2018promptlist.jpeg?format=1000w"/>)
+        result.push(<GalleryLink key="themes" link="https://www.instagram.com/p/BnL2dxfg8Uq/" url="https://images.squarespace-cdn.com/content/v1/5af1bd791aef1d143f85e67e/ee774b75-e4fd-4928-8dd7-834bbefb5ee7/2018promptlist.jpeg?format=1000w"/>)
         Object.keys(pictures).sort().forEach(picturessKey => {
             const picturess = pictures[picturessKey]
 
@@ -64,14 +64,12 @@ class GalleryContainer extends React.Component {
 
     render() {
         return (
-            <div className="gallery-container">
+            <>
                 {this.state.isPopupOpen && <Popup title={this.state.popupTitle} image={this.state.popupImage} close={this.closePopup}/>}
-                <div className="gallery">
-                    <div className="gallery-items">
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
                         {this.renderPictures()}
                     </div>
-                </div>
-            </div>
+            </>
         )
     }
 }

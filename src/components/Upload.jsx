@@ -48,8 +48,8 @@ class Upload extends React.Component {
     render() {
         return (
             <div>
-                <label className="upload-file-button">+
-                    <input ref="file" type="file" className="upload-file-input" onChange={this.handleFiles.bind(this)}/>
+                <label className="rounded-full fixed right-10 bottom-10 w-16 h-16 text-4xl leading-none bg-neutral-900 text-neutral-100 flex justify-center items-center">+
+                    <input ref="file" type="file" className="hidden" onChange={this.handleFiles.bind(this)}/>
                 </label>
                 {this.state.imgPreview && <Preview
                     image={this.state.imgPreview}

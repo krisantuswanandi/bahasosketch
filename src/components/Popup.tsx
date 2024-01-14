@@ -16,33 +16,33 @@ const Popup = ({ title, image, close }: Props) => {
 
   return (
     <div
-      className="popup"
+      className="fixed inset-0 z-50 flex overflow-auto bg-neutral-500/50 p-4 backdrop-blur"
       onClick={() => {
         close();
       }}
     >
       <div
-        className="popup-dialog"
+        className="m-auto w-full max-w-screen-sm overflow-hidden border border-neutral-400/20 bg-white shadow-lg"
         onClick={(event) => {
           event.stopPropagation();
         }}
       >
-        <div className="popup-header">
-          <span className="popup-title">{title}&nbsp;</span>
-          <span
-            className="popup-close"
+        <div className="flex items-center justify-between">
+          <span className="truncate pl-3">{title}&nbsp;</span>
+          <button
+            className="px-5 py-3"
             onClick={() => {
               close();
             }}
           >
-            X
-          </span>
+            &#x2715;
+          </button>
         </div>
-        <div className="popup-body">
+        <div className="min-h-40 p-2 pt-0">
           {image === "" ? (
-            <div className="popup-loading">Loading...</div>
+            <div className="p-14 text-center">Loading...</div>
           ) : (
-            <img src={image} alt={title} className="popup-image" />
+            <img src={image} alt={title} />
           )}
         </div>
       </div>
