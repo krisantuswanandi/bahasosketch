@@ -1,4 +1,4 @@
-import image from "../assets/images/inktoberh.png";
+import image from "../assets/inktoberh.png";
 
 const Header = () => (
   <header className="flex justify-center py-4">

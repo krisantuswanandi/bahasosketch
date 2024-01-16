@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Button from "./Button";
 
 interface Props {
-  title: string;
   image: string;
   onConfirm: () => void;
   onCancel: () => void;
